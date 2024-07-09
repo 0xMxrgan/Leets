@@ -1,33 +1,34 @@
 /*
-Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
-
- * Definition for singly-linked list. */
-
- #include <stdio.h>
- #include <stdlib.h>
-
- struct ListNode {
-    int val;
-    struct ListNode *next;
- };
-
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
 
 struct ListNode* removeElements(struct ListNode* head, int val) {
-    struct ListNode *tmp;
-    struct ListNode *prev;
+    struct ListNode *canc;
+    struct ListNode *prev = NULL;
     struct ListNode *curr = head;
 
-    while (curr -> next != NULL) {
+    while (curr != NULL) {
         if (curr -> val == val) {
-            tmp = curr;
-
-            curr = curr -> next;
-
             if (prev != NULL) {
-                prev -> next = curr;
+                prev -> next = curr -> next;
+                canc = curr;
+                curr = curr -> next;
+                free(canc);
+            } else {
+                head = curr -> next;
+                canc = curr;
+                free(canc);
+                curr = head;
             }
-
-            free (tmp);
+        } else {
+            prev = curr;
+            curr = curr -> next;
         }
     }
+
+    return head;
 }
