@@ -5,16 +5,19 @@
  *     struct ListNode *next;
  * };
  */
+
 struct ListNode* reverseList(struct ListNode* head) {
     struct ListNode *prev = NULL;
-    struct ListNode *curr;
-
-    for (curr = head; curr != NULL; curr = curr -> next) {
-
+    struct ListNode *curr = head;
+    struct ListNode *next;
+    
+    while (curr != NULL) {
+        next = curr -> next;
         curr -> next = prev;
+
         prev = curr;
-        curr = curr -> next;
+        curr = next;
     }
 
-    return head;
+    return prev;
 }
