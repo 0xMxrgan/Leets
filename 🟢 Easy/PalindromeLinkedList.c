@@ -9,24 +9,26 @@
 bool isPalindrome(struct ListNode* head) {
     struct ListNode *prev = NULL;
     struct ListNode *curr = head;
-    struct ListNode *next = curr -> next;
+    struct ListNode *next;
     int flag = 1;                           // Checking if the two are the same
 
     while (curr) {
-        curr -> next = prev;
         next = curr -> next;
+        curr -> next = prev;
+
         prev = curr;
         curr = next;
     }
 
-    while (prev) {
-        if (head != prev) {
+    while (head) {
+        if (head -> val !=  prev -> val) {
             flag = 0;
         }
         prev = prev -> next;
+        head = head -> next;
     }
     
-    if (flag) {
+    if (flag == 1) {
         return true;
     } else {
         return false;
