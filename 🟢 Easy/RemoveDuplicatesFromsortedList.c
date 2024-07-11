@@ -1,34 +1,85 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
-struct ListNode* deleteDuplicates(struct ListNode* head) {
-    struct ListNode *tmp;
-    struct ListNode *curr = head;
-    struct ListNode *canc;
-    struct ListNode *prev;
-    struct ListNode *next = curr -> next;
+#include <stdio.h>
+#include <stdlib.h>
 
-    while (curr != NULL) {
+typedef struct node {
+    int datum;
+    struct node *next;
+} elem;
 
-        for (tmp = curr -> next; tmp != NULL; tmp = tmp -> next) {
-            prev = curr;
-            if (curr -> val == tmp -> val) {
+elem *createList(elem *, int);
+elem *deleteDuplicates(elem *);
+void view(elem *);
 
-                prev -> next = tmp -> next;
-                curr -> next = tmp -> next;
-                next = tmp -> next;
-                canc = tmp -> val;
-                free(canc);
-                
-            }
-        }
+int main() {
+    elem *List = NULL;
+    int Num;
 
-        curr = next;
+    scanf("%d", &Num);
+    while (Num > 0) {
+        List = createList(List, Num);
+        scanf("%d", &Num);
     }
 
-    return head;
+    view(List);
+
+    printf("Without duplicates:\n");
+
+    List = deleteDuplicates(List);
+
+    view(List);
+}
+
+elem *createList(elem *list, int num) {
+    elem *prev;
+    elem *tmp;
+
+    tmp = (elem *)malloc(sizeof(elem));
+
+    if (tmp != NULL) {
+        tmp -> datum = num;
+        tmp -> next = NULL;
+
+        if (list != NULL) {
+            for (prev = list; prev -> next != NULL; prev = prev -> next);
+            prev -> next = tmp;
+        } else {
+            list = tmp;
+        }
+    } else {
+        printf("Error!");
+    }
+    return list;
+}
+
+elem *deleteDuplicates(elem *list) {
+    elem *tmp;
+    elem *curr;
+    elem *prev = NULL;
+    elem *prox = curr -> next;
+    elem *term;
+
+    for (curr = list; curr != NULL; curr = curr -> next) {
+        for (tmp = list -> next; tmp != NULL; tmp = tmp -> next) {
+
+            if (curr -> datum == tmp -> datum) {
+                prev = curr;
+                curr = prox;
+                prev -> next = prox;
+
+
+            }
+        }
+    }
+
+
+    return list;
+}
+
+void view(elem *list) {
+
+    while (list != NULL) {
+        printf("%d ", list -> datum);
+        list = list -> next;
+    }
+    printf("\n");
 }
